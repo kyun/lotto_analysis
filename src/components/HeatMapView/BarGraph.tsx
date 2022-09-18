@@ -29,7 +29,10 @@ const Box = styled.div`
   height: 20px;
   font-size: 12px;
 `;
-const BarGraph: React.FC = ({ item }: any) => {
+interface Props {
+  item: any[];
+}
+const BarGraph: React.FC<Props> = ({ item }) => {
   return (
     <Base>
       <Row>

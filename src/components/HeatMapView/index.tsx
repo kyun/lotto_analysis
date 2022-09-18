@@ -49,7 +49,10 @@ const MockObj = MockArray.reduce((acc, cur, index) => {
   return acc;
 }, {});
 
-const HeatMapView: React.FC = ({ item }: any) => {
+interface Props {
+  item: any[];
+}
+const HeatMapView: React.FC<Props> = ({ item }) => {
   const [includeBonus, setIncludeBonus] = React.useState(false);
 
   const isActive = React.useCallback((item: any, number: number) => {

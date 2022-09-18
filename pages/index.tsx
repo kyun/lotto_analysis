@@ -5,18 +5,16 @@ import parse from "node-html-parser";
 import styles from "../styles/Home.module.css";
 import React from "react";
 import dynamic from "next/dynamic";
+import useDebounce from "hooks/useDebounce";
 
 const HeatMapView = dynamic(() => import("components/HeatMapView"), {
-  ssr: false,
+  ssr: true,
 });
 
 const Home: NextPage = ({ out }: any) => {
-  const totalSellAmount = React.useMemo(() => {
-    return out.reduce((acc: number, cur: any) => {
-      return acc + cur.totSellamnt;
-    }, 0);
-  }, [out]);
+  const [length, setLength] = React.useState(10);
 
+  const debouncedLength = useDebounce(length, 500);
   const total = React.useMemo(() => {
     return out.reduce(
       (acc: any, cur: any) => {
@@ -34,28 +32,10 @@ const Home: NextPage = ({ out }: any) => {
   }, [out]);
 
   const top10 = React.useMemo(() => {
-    return out.reverse().slice(0, 10);
-  }, [out]);
+    const copied = [...out];
+    return copied.reverse().slice(0, debouncedLength);
+  }, [out, debouncedLength]);
 
-  const numberAcc = React.useMemo(() => {
-    return out.reduce((acc, cur) => {
-      const numbers = [
-        cur.drwtNo1,
-        cur.drwtNo2,
-        cur.drwtNo3,
-        cur.drwtNo4,
-        cur.drwtNo5,
-        cur.drwtNo6,
-      ];
-      numbers.forEach((number) => {
-        if (!acc[number]) {
-          acc[number] = 0;
-        }
-        acc[number] = acc[number] + 1;
-      });
-      return acc;
-    });
-  }, [out]);
   return (
     <div className={styles.container}>
       <Head>
@@ -67,11 +47,19 @@ const Home: NextPage = ({ out }: any) => {
       <h1>Total winnerCount: {total.winnerCount}</h1>
 
       <h1>Total firstWinAmount: {total.firstWinAmount}</h1>
-      <h2>{JSON.stringify(numberAcc)}</h2>
+      <div>
+        <input
+          type="range"
+          step={1}
+          min={10}
+          max={1032}
+          value={length}
+          onChange={(e) => setLength(Number(e.target.value))}
+        />
+        <span>{length}</span>
+      </div>
       {/* <LottoAccMapView /> */}
-      <HeatMapView item={out} />
-
-      <pre>{JSON.stringify(top10, undefined, "\t")}</pre>
+      <HeatMapView item={top10} />
     </div>
   );
 };

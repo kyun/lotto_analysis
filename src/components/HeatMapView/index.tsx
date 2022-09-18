@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import BarGraph from "./BarGraph";
 
 const Base = styled.div`
   // background: red;
@@ -41,10 +42,15 @@ const NumberBox = styled.span<{ active?: boolean; bonus?: boolean }>`
   `};
 `;
 
+const MockArray = new Array(45).fill(0);
+
+const MockObj = MockArray.reduce((acc, cur, index) => {
+  acc[index + 1] = 0;
+  return acc;
+}, {});
+
 const HeatMapView: React.FC = ({ item }: any) => {
-  const mockArray = React.useMemo(() => {
-    return new Array(45).fill(0);
-  }, []);
+  const [includeBonus, setIncludeBonus] = React.useState(false);
 
   const isActive = React.useCallback((item: any, number: number) => {
     if (item.drwtNo1 === number) return true;
@@ -59,13 +65,55 @@ const HeatMapView: React.FC = ({ item }: any) => {
     if (item.bnusNo === number) return true;
     return false;
   }, []);
+
+  const numberAcc = React.useMemo(() => {
+    const obj = item.reduce(
+      (acc, cur) => {
+        const numbers = [
+          cur.drwtNo1,
+          cur.drwtNo2,
+          cur.drwtNo3,
+          cur.drwtNo4,
+          cur.drwtNo5,
+          cur.drwtNo6,
+        ];
+        if (includeBonus) {
+          numbers.push(cur.bnusNo);
+        }
+        numbers.forEach((number) => {
+          if (!acc[number]) {
+            acc[number] = 0;
+          }
+          acc[number] = acc[number] + 1;
+        });
+        return acc;
+      },
+      { ...MockObj }
+    );
+    console.log(obj);
+
+    return Object.keys(obj).map((key) => {
+      return obj[key];
+    });
+  }, [item, includeBonus]);
   return (
     <Base>
+      <div>
+        <label>
+          <input
+            type="checkbox"
+            checked={includeBonus}
+            onChange={() => setIncludeBonus((prev) => !prev)}
+          />
+          <span>Include Bonus Number</span>
+        </label>
+      </div>
+      <BarGraph item={numberAcc} />
       {item.map((item: any, index: number) => {
         return (
-          <Row key={index}>
+          <Row key={item.drwNo}>
             <RowLabel>{item.drwNo}</RowLabel>
-            {mockArray.map((_, index) => (
+            {MockArray.map((_, index) => (
               <NumberBox
                 key={index}
                 bonus={isBonus(item, index + 1)}

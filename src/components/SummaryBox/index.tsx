@@ -9,8 +9,9 @@ const Base = styled.div`
   gap: 8px;
   background: rgba(255, 255, 255, 0.1);
   padding: 32px;
-  border: 1px solid #eee;
-  border-radius: 4px;
+  border: 1px solid #cccccc;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
 `;
 
 const Label = styled.p`
@@ -23,7 +24,7 @@ const Value = styled.p`
   margin: 0;
   font-size: 32px;
   font-weight: bold;
-  color: #fff;
+  color: #000;
 `;
 
 interface Props {

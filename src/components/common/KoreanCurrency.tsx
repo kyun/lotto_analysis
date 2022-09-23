@@ -11,7 +11,7 @@ const Value = styled.span`
 
 const Unit = styled.span`
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(0, 0, 0, 0.4);
   margin-right: 4px;
   margin-left: 2px;
 `;
@@ -34,7 +34,7 @@ const KoreanCurrency: React.FC<Props> = ({ value }) => {
       }, [] as any[])
       .reverse()
       .map((arr, idx) => {
-        return arr.join("");
+        return arr.reverse().join("");
       });
     return result;
   }, [value]);

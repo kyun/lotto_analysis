@@ -14,7 +14,7 @@ const KoreanCurrency = dynamic(
 const SummaryPage: NextPage = () => {
   return (
     <SummaryLayout>
-      <h1>Summary Page</h1>
+      <br />
       <div style={{ textAlign: "center" }}>
         <WinNumberBox />
       </div>

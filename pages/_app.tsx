@@ -1,14 +1,17 @@
-import "../styles/globals.css";
-import type { AppProps } from "next/app";
-import { ThemeProvider } from "styled-components";
-import Head from "next/head";
-import { COLORS } from "constants/style";
+import type { AppProps } from 'next/app';
+import { Global } from '@emotion/react';
+import { globalStyles } from '~/styles/global';
+import Head from 'next/head';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ThemeProvider theme={COLORS}>
+    <>
+      <Head>
+        <meta name="viewport" content="initial-scale=1, width=device-width" />
+      </Head>
+      <Global styles={[globalStyles]} />
       <Component {...pageProps} />
-    </ThemeProvider>
+    </>
   );
 }
 

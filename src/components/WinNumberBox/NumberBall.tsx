@@ -1,5 +1,6 @@
 import React from "react";
-import styled from "styled-components";
+import styled from "@emotion/styled";
+import { COLORS } from "~/constants/style";
 
 const Base = styled.div<{ color: string }>`
   font-size: 48px;
@@ -11,7 +12,7 @@ const Base = styled.div<{ color: string }>`
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  background: ${({ theme, color }) => theme[color]};
+  background: ${({ color }) => (COLORS as any)[color]};
 
   display: inline-flex;
   align-items: center;

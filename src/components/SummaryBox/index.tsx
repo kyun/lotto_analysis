@@ -1,6 +1,5 @@
-import KoreanCurrency from "components/common/KoreanCurrency";
 import React from "react";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 
 const Base = styled.div`
   //

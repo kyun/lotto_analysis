@@ -1,13 +1,13 @@
 // SummaryPage with Next Route
 import React from "react";
 import { NextPage } from "next";
-import SummaryBox from "components/SummaryBox";
+import SummaryBox from "~/components/SummaryBox";
 import dynamic from "next/dynamic";
-import SummaryLayout from "components/common/SummaryLayout";
-import WinNumberBox from "components/WinNumberBox";
+import SummaryLayout from "~/components/common/SummaryLayout";
+import WinNumberBox from "~/components/WinNumberBox";
 
 const KoreanCurrency = dynamic(
-  () => import("components/common/KoreanCurrency"),
+  () => import("~/components/common/KoreanCurrency"),
   { ssr: false }
 );
 
